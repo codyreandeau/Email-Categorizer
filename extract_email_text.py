@@ -1,8 +1,8 @@
-" " " This method extracts an emails
+''' This method extracts an emails
 contents, while eliminating stopwords, newline 
 characters, /xa0 characters, then tokenizes
 the words, which are stored in a set
-" " "
+'''
 
 def extract_message(url):
 	markup = open(url)
