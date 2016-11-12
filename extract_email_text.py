@@ -1,12 +1,7 @@
-''' This method extracts an emails
-contents, while eliminating stopwords, newline 
-characters, /xa0 characters, then tokenizes
-the words, which are stored in a set
-'''
-
-import nltk, re
+import nltk, re, string
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
+from nltk import word_tokenize
 
 def extract_message(url):
 	markup = open(url)
@@ -14,11 +9,10 @@ def extract_message(url):
 	for script in soup(["script", "style"]):
 		script.extract()
 	text = soup.get_text()
-	text_clean = re.sub(r"\n", " ", text)
-	text_clean = text_clean.replace(u'\xa0', u' ')
-	a = text_clean.find('From:')
-	tokens = word_tokenize((text_clean[a:]))
+	a = text.find('From:')
+	tokens = word_tokenize((text[a:]))
 	tokens_set = set(tokens)
 	stopwords = nltk.corpus.stopwords.words('english')
 	content = [w for w in tokens_set if w.lower() not in stopwords]
+	content = [p for p in content if p not in string.punctuation]
 	return content
