@@ -29,8 +29,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 
 #Selected categories from 20newsgroups
 categories = ['comp.graphics', 'soc.religion.christian', 'misc.forsale',
-'talk.politics.misc', 'comp.graphics',
-'comp.sys.ibm.pc.hardware', 'rec.sport.hockey']
+'talk.politics.misc', 'comp.sys.ibm.pc.hardware', 'rec.sport.hockey']
 
 #Load the list of files
 news = fetch_20newsgroups(categories=categories)
@@ -56,6 +55,7 @@ gary2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\gary2.html")
 jesus = extract_message("C:\\Users\\Cody\\Documents\\Emails\\Jesus.html")
 jesus2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\jesus2.html")
 shop = extract_message("C:\\Users\\Cody\\Documents\\Emails\\shop.html")
+hockey = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey.html")
 
 #Print out class labels
 print (news.target_names)
@@ -75,7 +75,7 @@ x_train_tf = tf_transformer.transform(x_train_counts)
 clf = MultinomialNB().fit(x_train_tfidf, news.target)
 
 #List of the extracted emails
-docs_new = [gary, gary2, jesus, jesus2, shop, tech]
+docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey]
 
 #Extract feautures from emails
 x_new_counts = count_vect.transform(docs_new)
