@@ -56,6 +56,7 @@ jesus = extract_message("C:\\Users\\Cody\\Documents\\Emails\\Jesus.html")
 jesus2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\jesus2.html")
 shop = extract_message("C:\\Users\\Cody\\Documents\\Emails\\shop.html")
 hockey = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey.html")
+comp = extract_message("C:\\Users\\Cody\\Documents\\Emails\\computer.html")
 
 #Print out class labels
 print (news.target_names)
@@ -75,7 +76,7 @@ x_train_tf = tf_transformer.transform(x_train_counts)
 clf = MultinomialNB().fit(x_train_tfidf, news.target)
 
 #List of the extracted emails
-docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey]
+docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey, comp]
 
 #Extract feautures from emails
 x_new_counts = count_vect.transform(docs_new)
