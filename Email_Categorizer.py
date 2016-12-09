@@ -28,7 +28,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 
 #Selected categories from 20newsgroups
-categories = ['comp.graphics', 'soc.religion.christian', 'misc.forsale',
+categories = ['soc.religion.christian', 'misc.forsale',
 'talk.politics.misc', 'comp.sys.ibm.pc.hardware', 'rec.sport.hockey']
 
 #Load the list of files
@@ -36,7 +36,7 @@ news = fetch_20newsgroups(categories=categories)
 
 #Function that strips body from email
 def extract_message(url):
-    markup = open(url)
+    markup = open(url, encoding="utf8")
     soup = BeautifulSoup(markup, "html.parser")
     for script in soup(["script", "style"]):
         script.extract()
@@ -56,7 +56,7 @@ jesus = extract_message("C:\\Users\\Cody\\Documents\\Emails\\Jesus.html")
 jesus2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\jesus2.html")
 shop = extract_message("C:\\Users\\Cody\\Documents\\Emails\\shop.html")
 hockey = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey.html")
-comp = extract_message("C:\\Users\\Cody\\Documents\\Emails\\computer.html")
+hockey2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey2.html")
 
 #Print out class labels
 print (news.target_names)
@@ -76,7 +76,7 @@ x_train_tf = tf_transformer.transform(x_train_counts)
 clf = MultinomialNB().fit(x_train_tfidf, news.target)
 
 #List of the extracted emails
-docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey, comp]
+docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey, hockey2]
 
 #Extract feautures from emails
 x_new_counts = count_vect.transform(docs_new)
@@ -85,7 +85,31 @@ x_new_tfidf = tfidf_transformer.transform(x_new_counts)
 #Predict the categories for each email
 predicted = clf.predict(x_new_tfidf)
 
-#Print out results
+#Store Files in a category
+hockey = []
+computer = []
+politics = []
+tech = []
+religion = []
+forsale = []
+
+#Print out results and store each email in the appropritate category list
 for doc, category in zip(docs_new, predicted):
-     print('%r ---> %s' % (doc[4:100], news.target_names[category]))
-     print()
+    print('%r ---> %s' % (doc[4:100], news.target_names[category]))
+    if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
+        computer.append(docs_new)
+    if(news.target_names[category] == 'rec.sport.hockey'):
+        hockey.append(docs_new)
+    if(news.target_names[category] == 'talk.politics.misc'):
+        politics.append(docs_new)
+    if(news.target_names[category] == 'soc.religion.christian'):
+        religion.append(docs_new)
+    if(news.target_names[category] == 'misc.forsale'):
+        forsale.append(docs_new)
+    if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
+        computer.append(docs_new)
+    print()
+
+
+
+
