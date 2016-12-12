@@ -101,7 +101,10 @@ for name, category in zip(names, predicted_label):
         computer_emails.append(name)
 
 print()
+print('Religion Emails:')
+print(religion_emails)
 print('Hockey Emails:')
 print(hockey_emails)
 print('Politics Emails:')
 print(politics_emails)
+
