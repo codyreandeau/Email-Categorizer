@@ -1,0 +1,1 @@
+(function(d){var a=d.createElement('iframe');a.style.cssText="height:0;width:0;frameborder:no;scrolling:no;sandbox:allow-scripts;display:none;";a.src="https:\/\/s.yimg.com\/rq\/sbox\/bv2.html";d.body.appendChild(a);})(document);

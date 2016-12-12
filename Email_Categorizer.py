@@ -20,7 +20,6 @@ from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 from nltk import word_tokenize
 from sklearn.datasets import fetch_20newsgroups
-from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
@@ -50,7 +49,7 @@ def extract_message(url):
 
 #File Names
 names = 'gary gary2 jesus jesus2 shop tech hockey hockey2'.split()
-docs_new = [extract_message("C:\\Users\\Cody\\Documents\\Emails\\%s.html" % name)
+docs_new = [extract_message("C:\\Users\\Cody\\Documents\\EmailCategorizer\\Emails\\%s.html" % name)
             for name in names]
 
 #Print out class labels
@@ -58,24 +57,24 @@ print (news.target_names)
 print()
 
 #Build dictionary of features
-count_vect = CountVectorizer()
-x_train_counts = count_vect.fit_transform(news.data)
+count_vectorizor = CountVectorizer()
+train_counts = count_vectorizor.fit_transform(news.data)
 
 #Downscaling
 tfidf_transformer = TfidfTransformer()
-x_train_tfidf = tfidf_transformer.fit_transform(x_train_counts)
-tf_transformer = TfidfTransformer(use_idf=False).fit(x_train_counts)
-x_train_tf = tf_transformer.transform(x_train_counts)
+train_tfidf = tfidf_transformer.fit_transform(train_counts)
+tf_transformer = TfidfTransformer(use_idf=False).fit(train_counts)
+train_tf = tf_transformer.transform(train_counts)
 
 #Train classifier
-clf = MultinomialNB().fit(x_train_tfidf, news.target)
+my_classifier = MultinomialNB().fit(train_tfidf, news.target)
 
 #Extract feautures from emails
-x_new_counts = count_vect.transform(docs_new)
-x_new_tfidf = tfidf_transformer.transform(x_new_counts)
+new_counts = count_vectorizor.transform(docs_new)
+new_tfidf = tfidf_transformer.transform(new_counts)
 
 #Predict the categories for each email
-predicted = clf.predict(x_new_tfidf)
+predicted_label = my_classifier.predict(new_tfidf)
 
 #Store Files in a category
 hockey_emails = []
@@ -86,7 +85,7 @@ religion_emails = []
 forsale_emails = []
 
 #Print out results and store each email in the appropritate category list
-for name, category in zip(names, predicted):
+for name, category in zip(names, predicted_label):
     print('%r ---> %s' % (name, news.target_names[category]))
     if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
         computer_emails.append(name)
