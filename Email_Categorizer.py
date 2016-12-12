@@ -48,15 +48,10 @@ def extract_message(url):
     final_text = text[a:]
     return final_text
 
-#Extract Emails
-tech = extract_message("C:\\Users\\Cody\\Documents\\Emails\\tech.html")
-gary = extract_message("C:\\Users\\Cody\\Documents\\Emails\\gary.html")
-gary2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\gary2.html")
-jesus = extract_message("C:\\Users\\Cody\\Documents\\Emails\\Jesus.html")
-jesus2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\jesus2.html")
-shop = extract_message("C:\\Users\\Cody\\Documents\\Emails\\shop.html")
-hockey = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey.html")
-hockey2 = extract_message("C:\\Users\\Cody\\Documents\\Emails\\hockey2.html")
+#File Names
+names = 'gary gary2 jesus jesus2 shop tech hockey hockey2'.split()
+docs_new = [extract_message("C:\\Users\\Cody\\Documents\\Emails\\%s.html" % name)
+            for name in names]
 
 #Print out class labels
 print (news.target_names)
@@ -75,9 +70,6 @@ x_train_tf = tf_transformer.transform(x_train_counts)
 #Train classifier
 clf = MultinomialNB().fit(x_train_tfidf, news.target)
 
-#List of the extracted emails
-docs_new = [gary, gary2, jesus, jesus2, shop, tech, hockey, hockey2]
-
 #Extract feautures from emails
 x_new_counts = count_vect.transform(docs_new)
 x_new_tfidf = tfidf_transformer.transform(x_new_counts)
@@ -86,30 +78,31 @@ x_new_tfidf = tfidf_transformer.transform(x_new_counts)
 predicted = clf.predict(x_new_tfidf)
 
 #Store Files in a category
-hockey = []
-computer = []
-politics = []
-tech = []
-religion = []
-forsale = []
+hockey_emails = []
+computer_emails = []
+politics_emails = []
+tech_emails = []
+religion_emails = []
+forsale_emails = []
 
 #Print out results and store each email in the appropritate category list
-for doc, category in zip(docs_new, predicted):
-    print('%r ---> %s' % (doc[4:100], news.target_names[category]))
+for name, category in zip(names, predicted):
+    print('%r ---> %s' % (name, news.target_names[category]))
     if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
-        computer.append(docs_new)
+        computer_emails.append(name)
     if(news.target_names[category] == 'rec.sport.hockey'):
-        hockey.append(docs_new)
+        hockey_emails.append(name)
     if(news.target_names[category] == 'talk.politics.misc'):
-        politics.append(docs_new)
+        politics_emails.append(name)
     if(news.target_names[category] == 'soc.religion.christian'):
-        religion.append(docs_new)
+        religion_emails.append(name)
     if(news.target_names[category] == 'misc.forsale'):
-        forsale.append(docs_new)
+        forsale_emails.append(name)
     if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
-        computer.append(docs_new)
-    print()
+        computer_emails.append(name)
 
-
-
-
+print()
+print('Hockey Emails:')
+print(hockey_emails)
+print('Politics Emails:')
+print(politics_emails)
