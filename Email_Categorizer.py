@@ -28,7 +28,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 
 #Selected categories from 20newsgroups
 categories = ['soc.religion.christian', 'misc.forsale',
-'talk.politics.misc', 'comp.sys.ibm.pc.hardware', 'rec.sport.hockey']
+'talk.politics.misc', 'comp.sys.ibm.pc.hardware', 'comp.graphics', 'rec.sport.hockey']
 
 #Load the list of files
 news = fetch_20newsgroups(categories=categories)
@@ -48,7 +48,7 @@ def extract_message(url):
     return final_text
 
 #File Names
-names = 'gary gary2 jesus jesus2 shop tech hockey hockey2'.split()
+names = 'gary gary2 gary3 jesus jesus2 jesus3 tech tech2 tech3 hockey hockey2 hockey3 shop '.split()
 docs_new = [extract_message("C:\\Users\\Cody\\Documents\\EmailCategorizer\\Emails\\%s.html" % name)
             for name in names]
 
@@ -87,7 +87,8 @@ forsale_emails = []
 #Print out results and store each email in the appropritate category list
 for name, category in zip(names, predicted_label):
     print('%r ---> %s' % (name, news.target_names[category]))
-    if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
+    if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'
+    or news.target_names[category] == 'comp.graphics'):
         computer_emails.append(name)
     if(news.target_names[category] == 'rec.sport.hockey'):
         hockey_emails.append(name)
@@ -97,8 +98,6 @@ for name, category in zip(names, predicted_label):
         religion_emails.append(name)
     if(news.target_names[category] == 'misc.forsale'):
         forsale_emails.append(name)
-    if(news.target_names[category] == 'comp.sys.ibm.pc.hardware'):
-        computer_emails.append(name)
 
 print()
 print('Religion Emails:')
@@ -107,4 +106,6 @@ print('Hockey Emails:')
 print(hockey_emails)
 print('Politics Emails:')
 print(politics_emails)
+print('Computer Emails:')
+print(computer_emails)
 
