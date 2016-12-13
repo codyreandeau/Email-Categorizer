@@ -48,13 +48,9 @@ def extract_message(url):
     return final_text
 
 #File Names
-names = 'gary gary2 gary3 jesus jesus2 jesus3 tech tech2 tech3 hockey hockey2 hockey3 shop '.split()
+names = 'gary gary2 jesus jesus2 jesus3 tech tech2 tech3 tech4 hockey hockey2 hockey3 hockey4 shop '.split()
 docs_new = [extract_message("C:\\Users\\Cody\\Documents\\EmailCategorizer\\Emails\\%s.html" % name)
             for name in names]
-
-#Print out class labels
-print (news.target_names)
-print()
 
 #Build dictionary of features
 count_vectorizor = CountVectorizer()
