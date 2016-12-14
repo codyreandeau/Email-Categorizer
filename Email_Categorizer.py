@@ -15,10 +15,8 @@ def main():
 if __name__ == '__main__':
     main()
 
-import nltk, re, string
-from nltk.corpus import stopwords
+import nltk, re
 from bs4 import BeautifulSoup
-from nltk import word_tokenize
 from sklearn.datasets import fetch_20newsgroups
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -48,7 +46,7 @@ def extract_message(url):
     return final_text
 
 #File Names
-names = 'gary gary2 jesus jesus2 jesus3 tech tech2 tech3 tech4 hockey hockey2 hockey3 hockey4 shop '.split()
+names = 'gary gary2 jesus jesus2 jesus3 tech tech2 tech3 tech4 hockey hockey2 hockey3 hockey4 shop'.split()
 docs_new = [extract_message("C:\\Users\\Cody\\Documents\\EmailCategorizer\\Emails\\%s.html" % name)
             for name in names]
 
@@ -56,7 +54,7 @@ docs_new = [extract_message("C:\\Users\\Cody\\Documents\\EmailCategorizer\\Email
 count_vectorizor = CountVectorizer()
 train_counts = count_vectorizor.fit_transform(news.data)
 
-#Downscaling
+#Downscaling - tf-idf
 tfidf_transformer = TfidfTransformer()
 train_tfidf = tfidf_transformer.fit_transform(train_counts)
 tf_transformer = TfidfTransformer(use_idf=False).fit(train_counts)
@@ -104,4 +102,9 @@ print('Politics Emails:')
 print(politics_emails)
 print('Computer Emails:')
 print(computer_emails)
+print('Emails Trying to Sell me Stuff:')
+print(forsale_emails)
+print()
+print('EXAMPLE OF EXTRACTED EMAIL:')
+print(docs_new[0])
 
